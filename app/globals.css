@@ -1,0 +1,329 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --container-xs: 23rem;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-ink: var(--ink);
+  --color-signal: var(--signal);
+  --color-paper: var(--paper);
+  --font-sans: var(--font-inter), system-ui, sans-serif;
+
+  --color-lime: #e8ff00;
+  --color-lime-hover: #d6eb00;
+  --color-lime-active: #c4d800;
+  --color-grey: #9ca3af;
+
+  /* neutral scale replaces the slate scale everywhere */
+  --color-slate-50: #f9fafb;
+  --color-slate-100: #f3f4f6;
+  --color-slate-200: #e5e7eb;
+  --color-slate-300: #d1d5db;
+  --color-slate-400: #9ca3af;
+  --color-slate-500: #6b7280;
+  --color-slate-600: #4b5563;
+  --color-slate-700: #3a3b3f;
+  --color-slate-800: #232427;
+  --color-slate-900: #151517;
+}
+
+:root {
+  --ink: #0b0b0b;
+  --signal: var(--primary); /* TEMPORARY alias, to be removed once nothing uses text-signal/bg-signal */
+  --paper: #f4f4f5;
+  --background: #fafafa;
+  --foreground: #0b0b0b;
+  --card: #ffffff;
+  --card-foreground: #0b0b0b;
+  --primary: #e8ff00; /* lime: FILL only on light surfaces (1.12:1 on white); text/icons/ring only on ink */
+  --primary-foreground: #0b0b0b;
+  --secondary: #f3f4f6;
+  --secondary-foreground: #0b0b0b;
+  --muted: #f3f4f6;
+  --muted-foreground: #5f6672;
+  --accent: #f7ffc7;
+  --accent-foreground: #0b0b0b;
+  --destructive: #dc2626;
+  --border: #e5e7eb;
+  --input: #878d98; /* field boundary: 3.4:1 on white, 3.1:1 on #f7ffc7 (WCAG 1.4.11) */
+  --ring: #0b0b0b;
+}
+
+/* black surfaces: the focus ring flips to lime */
+.surface-ink { --ring: #e8ff00; }
+
+@layer base {
+  * { @apply border-border; }
+  body { @apply bg-background text-foreground font-sans antialiased; }
+  html { scroll-padding-top: 7.5rem; }
+  ::selection { background: #e8ff00; color: #0b0b0b; }
+  h1, h2, h3 { text-wrap: balance; }
+  button:not(:disabled),
+  [role="button"],
+  summary,
+  select,
+  label:has(input[type="radio"], input[type="checkbox"]) { cursor: pointer; }
+  button:disabled { cursor: not-allowed; }
+  a:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; }
+}
+
+/* app feel on touch screens: no grey tap flash, no double-tap zoom delay, UI chrome is not text-selectable */
+@media (pointer: coarse) {
+  html { -webkit-tap-highlight-color: transparent; }
+  a, button, summary, [role="button"], label { touch-action: manipulation; }
+  button, [role="button"], nav a, header a { -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
+  img { -webkit-touch-callout: none; }
+  a:active, button:active:not(:disabled) { opacity: 0.85; }
+}
+/* room for the bottom tab bar (phones and tablets) */
+@media (max-width: 1023.98px) {
+  /* a focused control scrolls clear of the fixed tab bar (3.5rem links + 1px border, rounded up) */
+  html { scroll-padding-bottom: calc(4.5rem + env(safe-area-inset-bottom)); }
+  /* a page with the dark footer pads the footer instead, so no light strip shows under it */
+  body:not(:has(footer)) { padding-bottom: calc(4rem + env(safe-area-inset-bottom)); }
+  footer { padding-bottom: calc(4rem + env(safe-area-inset-bottom)); }
+}
+/* installed to the home screen: no pull-to-refresh or rubber-band bounce, content clears the notch */
+@media (display-mode: standalone) {
+  html, body { overscroll-behavior-y: none; }
+  body { padding-top: env(safe-area-inset-top); }
+}
+
+/* one scrollbar design everywhere: page, drawers, dialogs, menus, shelves, sidebar */
+:root {
+  --scroll-thumb: #878d98;
+  --scroll-thumb-hover: #6b7280;
+}
+@supports not selector(::-webkit-scrollbar) {
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--scroll-thumb) transparent;
+  }
+}
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-button {
+  display: none;
+}
+::-webkit-scrollbar-track,
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--scroll-thumb);
+  border: 2px solid transparent;
+  background-clip: content-box;
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scroll-thumb-hover);
+  background-clip: content-box;
+}
+
+/* horizontal shelves scroll by swipe/drag; their scrollbar is hidden (the scroll itself is untouched) */
+.no-scrollbar { scrollbar-width: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+
+/* blueprint grid used behind dark sections */
+.bg-blueprint {
+  background-image:
+    linear-gradient(to right, rgb(255 255 255 / 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(255 255 255 / 0.06) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+/* tabular numerals for prices / specs */
+.tnum { font-variant-numeric: tabular-nums; }
+
+/* scrolling category ticker */
+@keyframes marquee {
+  to { transform: translateX(-50%); }
+}
+.marquee { animation: marquee 40s linear infinite; }
+.marquee:hover { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) {
+  .marquee { animation: none; }
+}
+
+/* gentle load-in for hero content */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: none; }
+}
+.fade-up { animation: fade-up 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+.d1 { animation-delay: 0.08s; }
+.d2 { animation-delay: 0.16s; }
+.d3 { animation-delay: 0.24s; }
+.d4 { animation-delay: 0.32s; }
+@media (prefers-reduced-motion: reduce) {
+  .fade-up { animation: none; }
+}
+
+/* soft lift used on cards */
+.lift {
+  transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 0.35s, border-color 0.35s;
+}
+@media (hover: hover) {
+  .lift:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 22px 40px -24px rgb(11 11 11 / 0.28);
+  }
+}
+.lift:active { border-color: var(--foreground); } /* pressed: colour, not a size change */
+@media (prefers-reduced-motion: reduce) {
+  .lift { transition: none; }
+  .lift:hover { transform: none; }
+}
+
+/* reduced motion: no hover scale / slide on cards, images and icons (colour and opacity changes stay) */
+@media (prefers-reduced-motion: reduce) {
+  [class*="hover:scale-"],
+  [class*="hover:translate-"] {
+    scale: none;
+    translate: none;
+  }
+}
+
+/* button micro-interactions: lift on hover, press on click, light sweep across primary buttons */
+.btn-fx {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.15s ease, filter 0.2s, box-shadow 0.2s;
+}
+.btn-fx:hover { transform: translateY(-1px); }
+.btn-fx:active { transform: translateY(0) scale(0.97); }
+.btn-fx::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg, transparent 30%, rgb(255 255 255 / 0.5) 50%, transparent 70%);
+  transform: translateX(-120%);
+  pointer-events: none;
+}
+.btn-fx:hover::after {
+  transform: translateX(120%);
+  transition: transform 0.7s ease;
+}
+/* buttons that sit flush against another control (search box) press but do not lift */
+.btn-flat:hover { transform: none; }
+
+/* order confirmed: ring pulse, circle + check that draw themselves, small confetti burst */
+@keyframes draw { to { stroke-dashoffset: 0; } }
+@keyframes pop {
+  0% { transform: scale(0.6); opacity: 0; }
+  60% { transform: scale(1.08); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+@keyframes ring-out {
+  0% { transform: scale(0.6); opacity: 0.7; }
+  100% { transform: scale(1.7); opacity: 0; }
+}
+@keyframes confetti-burst {
+  0% { transform: translate(0, 0) rotate(0) scale(0.4); opacity: 1; }
+  80% { opacity: 1; }
+  100% { transform: translate(var(--x), var(--y)) rotate(var(--r)) scale(1); opacity: 0; }
+}
+.success-badge { animation: pop 0.5s cubic-bezier(0.2, 0.9, 0.3, 1.2) both; }
+.success-ring { animation: ring-out 0.9s ease-out 0.25s both; }
+.success-circle {
+  stroke-dasharray: 151;
+  stroke-dashoffset: 151;
+  animation: draw 0.55s ease-out 0.1s forwards;
+}
+.success-check {
+  stroke-dasharray: 40;
+  stroke-dashoffset: 40;
+  animation: draw 0.35s ease-out 0.55s forwards;
+}
+.confetti {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  margin: -4px 0 0 -4px;
+  border-radius: 2px;
+  background: var(--c);
+  opacity: 0;
+  pointer-events: none;
+  animation: confetti-burst 0.95s cubic-bezier(0.15, 0.7, 0.3, 1) 0.5s both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-fx { transition: none; }
+  .btn-fx:hover, .btn-fx:active { transform: none; }
+  .btn-fx::after { display: none; }
+  .success-badge, .success-ring, .confetti { animation: none; }
+  .success-ring, .confetti { display: none; }
+  .success-circle, .success-check { animation: none; stroke-dashoffset: 0; }
+}
+
+/* Add to Cart: the label slides into the icon, then the icon glides to the button's centre and fades */
+@keyframes text-merge {
+  to {
+    transform: translateX(var(--tx, -1.5rem)) scale(0.3);
+    opacity: 0;
+  }
+}
+@keyframes cart-roll {
+  0%,
+  22% {
+    transform: translateX(0) scale(1);
+    opacity: 1;
+    animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1);
+  }
+  72% {
+    transform: translateX(var(--dx, 2rem)) scale(1.15);
+    opacity: 1;
+    animation-timing-function: ease-in;
+  }
+  100% {
+    transform: translateX(var(--dx, 2rem)) scale(0.4);
+    opacity: 0;
+  }
+}
+
+/* Buy Now: the bolt snaps, and a flash ripples out from it */
+@keyframes bolt-zap {
+  0% {
+    transform: scale(1) rotate(0deg);
+  }
+  30% {
+    transform: scale(1.5) rotate(-14deg);
+  }
+  55% {
+    transform: scale(1.2) rotate(8deg);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+}
+@keyframes buy-flash {
+  from {
+    transform: scale(0);
+    opacity: 0.6;
+  }
+  to {
+    transform: scale(9);
+    opacity: 0;
+  }
+}

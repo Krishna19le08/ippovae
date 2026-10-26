@@ -1,0 +1,15 @@
+node_modules
+.next
+
+# Playwright MCP output
+/.playwright-mcp/
+
+# static export output
+/out/
+
+# Playwright Test output
+/test-results/
+/playwright-report/
+
+# local env (admin emails etc.)
+.env*.local

@@ -1,8 +1,7 @@
 # Dependency migration tracker
 
-Removed: `lucide-react`, `lenis`, `clsx`, `tailwind-merge`, `radix-ui`, `tw-animate-css`, and the shadcn config (`components.json`).
-Kept on purpose: Next 16, React 19, Tailwind v4, `class-variance-authority`.
-Not touched (unused, not in scope): `cn` (npm package; nothing imports it).
+Removed: `lucide-react`, `lenis`, `clsx`, `tailwind-merge`, `radix-ui`, `tw-animate-css`, `class-variance-authority` (button/badge/alert now use plain variant objects), the unused `cn` npm package, and the shadcn config (`components.json`).
+Kept on purpose: Next 16, React 19, Tailwind v4 (`tailwindcss`, `@tailwindcss/postcss`, `postcss`).
 
 Status values: DISCOVERED → INSPECTED → ASSIGNED → IMPLEMENTED → INTEGRATED → TESTED → VERIFIED
 

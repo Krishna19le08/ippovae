@@ -1,7 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import { LogIn } from "lucide-react";
-import Choreo from "@/components/Choreo";
+import { LogIn } from "@/components/icons";
 import Header from "@/components/Header";
 import { Button } from "@/components/ui/button";
 import { ErrorNotice, LoadingState } from "@/components/platform/ErrorNotice";
@@ -68,7 +67,6 @@ function Gate({ children }) {
 export default function CustomerShell({ title, children, gate = true }) {
   return (
     <PlatformRoot>
-      <Choreo />
       <div className="print:hidden"><Header /></div>
       <main id="main-content" tabIndex={-1} className="mx-auto min-h-[60vh] max-w-[1312px] px-4 pt-10 pb-28 outline-none lg:pb-16 print:p-0">
         {title && <h1 className="mb-6 text-3xl font-extrabold tracking-tight print:hidden">{title}</h1>}

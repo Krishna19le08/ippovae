@@ -7,8 +7,7 @@ import {
   MousePointerClick,
   BadgeCheck,
   Boxes,
-} from "lucide-react";
-import Choreo from "@/components/Choreo";
+} from "@/components/icons";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import Products from "@/components/Products";
@@ -44,7 +43,6 @@ const stats = [
 export default function Home() {
   return (
     <>
-      <Choreo />
       <Header />
 
       <main id="main-content" tabIndex={-1} className="outline-none">

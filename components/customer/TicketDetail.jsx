@@ -2,7 +2,7 @@
 import { useRef, useState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { ArrowLeft, Paperclip, Send } from "lucide-react";
+import { ArrowLeft, Paperclip, Send } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { ErrorNotice, LoadingState } from "@/components/platform/ErrorNotice";
 import FileAttach from "@/components/platform/FileAttach";

@@ -1,4 +1,4 @@
-import { AlertCircle, Inbox } from "lucide-react";
+import { AlertCircle, Inbox } from "@/components/icons";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";

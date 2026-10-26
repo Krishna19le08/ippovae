@@ -1,7 +1,7 @@
 "use client";
 import { Children, cloneElement, useCallback, useEffect, useId, useRef, useState } from "react";
 import GoogleButton from "@/components/GoogleButton";
-import { AlertCircle, ExternalLink, Eye, EyeOff, Lock, Mail, User } from "lucide-react";
+import { AlertCircle, ExternalLink, Eye, EyeOff, Lock, Mail, User } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { SITE } from "@/lib/data";

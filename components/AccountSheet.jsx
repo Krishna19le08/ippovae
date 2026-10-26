@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
-import { ArrowLeft, ChevronRight, ClipboardList, ExternalLink, Layers, LogOut, MapPin, Package, ShoppingCart, Store, Tag, UserRound } from "lucide-react";
+import { ArrowLeft, ChevronRight, ClipboardList, ExternalLink, Layers, LogOut, MapPin, Package, ShoppingCart, Store, Tag, UserRound } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { useDialogFocus } from "@/lib/useDialogFocus";
 import { HUB, SITE } from "@/lib/data";
@@ -79,7 +79,7 @@ export default function AccountSheet({ open, suspended, user, label, returnRef, 
           <h2 className="text-lg font-bold">Account</h2>
         </div>
 
-        <div data-lenis-prevent className="flex-1 space-y-5 overflow-y-auto overscroll-contain px-4 py-4 pb-[max(1.5rem,env(safe-area-inset-bottom))]">
+        <div className="flex-1 space-y-5 overflow-y-auto overscroll-contain px-4 py-4 pb-[max(1.5rem,env(safe-area-inset-bottom))]">
           {user ? (
             <div className="flex items-center gap-3 surface-ink rounded-2xl bg-ink px-4 py-4 text-white">
               <span className="flex size-12 shrink-0 items-center justify-center rounded-full bg-primary text-xl font-bold text-primary-foreground uppercase">

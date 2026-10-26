@@ -3,7 +3,7 @@ import { withBase } from "@/lib/asset";
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { MapPin, Search, ShoppingCart, Menu } from "lucide-react";
+import { MapPin, Search, ShoppingCart, Menu } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import CartDrawer from "@/components/CartDrawer";
@@ -60,8 +60,7 @@ export default function Header() {
     const y = window.scrollY;
     const restore = () => {
       if (Math.abs(window.scrollY - y) > 1) {
-        if (window.lenis) window.lenis.scrollTo(y, { immediate: true, force: true });
-        else window.scrollTo(0, y);
+        window.scrollTo({ top: y, behavior: "instant" });
       }
     };
     requestAnimationFrame(() => requestAnimationFrame(restore));
@@ -195,17 +194,15 @@ export default function Header() {
     };
   }, []);
 
-  // while a drawer or dialog is open the page behind must not scroll (wheel, keys, touch): stop Lenis and clip the root
+  // while a drawer or dialog is open the page behind must not scroll (wheel, keys, touch): clip the root
   const locked = cartOpen || loginOpen || profileOpen || accountOpen;
   useEffect(() => {
     if (!locked) return;
     const root = document.documentElement;
     const prev = root.style.overflow;
-    window.lenis?.stop();
     root.style.overflow = "hidden";
     return () => {
       root.style.overflow = prev;
-      window.lenis?.start();
     };
   }, [locked]);
 
@@ -375,7 +372,7 @@ export default function Header() {
                   <span
                     aria-hidden="true"
                     key={cart}
-                    className="animate-in zoom-in-150 motion-reduce:animate-none absolute -top-2 -right-2.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-primary px-1 text-[11px] leading-none font-semibold text-primary-foreground duration-300"
+                    className="anim-pop-in-slow motion-reduce:animate-none absolute -top-2 -right-2.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-primary px-1 text-[11px] leading-none font-semibold text-primary-foreground duration-300"
                   >
                     {cart}
                   </span>
@@ -433,7 +430,7 @@ export default function Header() {
         cart={cart}
         signedIn={!!user}
         onSearch={() => {
-          window.scrollTo({ top: 0 });
+          window.scrollTo({ top: 0, behavior: "instant" });
           searchRef.current?.focus();
         }}
         onCart={(e) => {

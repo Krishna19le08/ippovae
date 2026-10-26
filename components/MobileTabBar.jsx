@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { House, LayoutGrid, Search, ShoppingCart, User } from "lucide-react";
+import { House, LayoutGrid, Search, ShoppingCart, User } from "@/components/icons";
 
 const FIELD = "input:not([type=checkbox]):not([type=radio]):not([type=hidden]),textarea,select";
 

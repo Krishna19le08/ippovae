@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import { Briefcase, Home, Plus } from "lucide-react";
+import { Briefcase, Home, Plus } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import AddressForm from "@/components/checkout/AddressForm";
 import {

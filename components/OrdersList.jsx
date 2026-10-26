@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
-import { Check, Package, RotateCcw } from "lucide-react";
+import { Check, Package, RotateCcw } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { addressLines, currentUser } from "@/lib/addresses";
 import { inr } from "@/lib/data";

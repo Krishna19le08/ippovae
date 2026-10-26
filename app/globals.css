@@ -1,5 +1,4 @@
 @import "tailwindcss";
-@import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -73,6 +72,8 @@
   * { @apply border-border; }
   body { @apply bg-background text-foreground font-sans antialiased; }
   html { scroll-padding-top: 7.5rem; }
+  /* smooth anchor links and scrollIntoView; off for reduced motion (layout.jsx sets data-scroll-behavior so Next doesn't smooth route changes) */
+  @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
   ::selection { background: #e8ff00; color: #0b0b0b; }
   h1, h2, h3 { text-wrap: balance; }
   button:not(:disabled),
@@ -325,5 +326,17 @@
   to {
     transform: scale(9);
     opacity: 0;
+  }
+}
+
+/* entrance animations: a short fade/zoom from slightly off-scale to rest (reduced motion: none) */
+@keyframes enter-fade-zoom { from { opacity: 0; transform: scale(.95); } }
+@keyframes enter-zoom { from { transform: scale(1.5); } }
+@layer components {
+  .anim-fade-zoom-in { animation: enter-fade-zoom 300ms; }
+  .anim-pop-in { animation: enter-zoom 200ms; }
+  .anim-pop-in-slow { animation: enter-zoom 300ms; }
+  @media (prefers-reduced-motion: reduce) {
+    .anim-fade-zoom-in, .anim-pop-in, .anim-pop-in-slow { animation: none; }
   }
 }

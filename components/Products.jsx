@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight } from "@/components/icons";
 import ProductCard from "@/components/ProductCard";
 import { FEATURED } from "@/lib/data";
 import { useCatalog } from "@/lib/admin/catalog";

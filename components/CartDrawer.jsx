@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { ArrowLeft, Banknote, Check, CreditCard, Landmark, MapPin, Minus, Plus, ShoppingCart, Smartphone, Trash2, X } from "lucide-react";
+import { ArrowLeft, Banknote, Check, CreditCard, Landmark, MapPin, Minus, Plus, ShoppingCart, Smartphone, Trash2, X } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import AddressBook from "@/components/checkout/AddressBook";
 import { inr } from "@/lib/data";
@@ -268,13 +268,13 @@ export default function CartDrawer({ open, onClose, items, view, setQty, clear, 
             </Link>
           </div>
         ) : step === "address" ? (
-          <div data-lenis-prevent className={body}>
+          <div className={body}>
             <MiniSummary count={count} total={total} />
             <AddressBook mode="checkout" onDeliver={() => setStep("summary")} />
           </div>
         ) : step === "summary" && selected ? (
           <>
-            <div data-lenis-prevent className={body}>
+            <div className={body}>
               <AddressBlock a={selected} onChange={() => setStep("address")} />
               <section aria-label="Items in your order">
                 <h3 className="mb-1 text-sm font-semibold">Items ({count})</h3>
@@ -308,7 +308,7 @@ export default function CartDrawer({ open, onClose, items, view, setQty, clear, 
           </>
         ) : step === "pay" && selected ? (
           <form onSubmit={placeOrder} className="flex min-h-0 flex-1 flex-col">
-            <div data-lenis-prevent className="flex-1 space-y-5 overflow-y-auto px-4 py-4">
+            <div className="flex-1 space-y-5 overflow-y-auto px-4 py-4">
               <MiniSummary count={count} total={total} />
               {!onCardBack && <AddressBlock a={selected} onChange={() => setStep("address")} />}
 
@@ -359,7 +359,7 @@ export default function CartDrawer({ open, onClose, items, view, setQty, clear, 
           </form>
         ) : (
           <>
-            <div data-lenis-prevent className="flex-1 overflow-y-auto px-4 py-2">
+            <div className="flex-1 overflow-y-auto px-4 py-2">
               {lines.length === 0 && gone.length === 0 ? (
                 <div className="flex h-full flex-col items-center justify-center gap-2 text-muted-foreground">
                   <ShoppingCart className="size-10" />

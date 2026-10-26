@@ -1,5 +1,5 @@
 "use client";
-import { Check, X } from "lucide-react";
+import { Check, X } from "@/components/icons";
 import { CANCELLED, STATUSES, historyOf, statusLabel, statusOf } from "@/lib/orders";
 
 const stamp = (iso) => {

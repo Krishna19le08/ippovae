@@ -1,7 +1,7 @@
 import * as React from "react"
 import { cva } from "class-variance-authority";
 import { cn } from "@/lib/utils"
-import { Slot } from "radix-ui"
+import { Slot } from "@/components/ui/slot"
 
 const badgeVariants = cva(
   "inline-flex w-fit shrink-0 items-center justify-center gap-1 overflow-hidden rounded-md border border-transparent px-2 py-0.5 text-[11px] font-semibold tracking-wide uppercase whitespace-nowrap transition-[color,box-shadow] focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 [&>svg]:pointer-events-none [&>svg]:size-3",
@@ -31,7 +31,7 @@ function Badge({
   asChild = false,
   ...props
 }) {
-  const Comp = asChild ? Slot.Root : "span"
+  const Comp = asChild ? Slot : "span"
 
   return (
     <Comp

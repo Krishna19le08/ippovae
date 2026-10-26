@@ -1,5 +1,4 @@
 import { notFound } from "next/navigation";
-import Choreo from "@/components/Choreo";
 import Header from "@/components/Header";
 import ProductDetail from "@/components/ProductDetail";
 import { products } from "@/lib/data";
@@ -21,7 +20,6 @@ export default async function ProductPage({ params }) {
 
   return (
     <>
-      <Choreo />
       <Header />
       <ProductDetail slug={slug} />
     </>

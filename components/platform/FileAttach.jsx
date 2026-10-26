@@ -1,6 +1,6 @@
 "use client";
 import { useId, useRef, useState } from "react";
-import { Paperclip, X } from "lucide-react";
+import { Paperclip, X } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { usePlatform } from "@/lib/platform-ui/PlatformProvider";
 

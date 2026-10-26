@@ -2,7 +2,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { ArrowLeft, Check, CreditCard, FileText, LifeBuoy, Printer, RotateCcw } from "lucide-react";
+import { ArrowLeft, Check, CreditCard, FileText, LifeBuoy, Printer, RotateCcw } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { ErrorNotice, LoadingState } from "@/components/platform/ErrorNotice";
 import Money from "@/components/platform/Money";

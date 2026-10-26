@@ -3,7 +3,7 @@ import { useEffect, useId, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { Check, ChevronDown, Search, SlidersHorizontal, X } from "lucide-react";
+import { Check, ChevronDown, Search, SlidersHorizontal, X } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import ProductCard from "@/components/ProductCard";
@@ -392,7 +392,7 @@ export default function AllProducts() {
             </button>
           )}
         </div>
-        <div data-lenis-prevent className="slim-scroll min-h-0 flex-1 overflow-y-auto overscroll-contain py-4 pr-2 pl-5">
+        <div className="slim-scroll min-h-0 flex-1 overflow-y-auto overscroll-contain py-4 pr-2 pl-5">
           <div className="pr-1">{filters}</div>
         </div>
         <div className="pointer-events-none absolute inset-x-0 bottom-0 h-8 rounded-b-2xl bg-gradient-to-t from-white to-transparent" aria-hidden />
@@ -409,7 +409,7 @@ export default function AllProducts() {
               role="dialog"
               aria-modal="true"
               aria-label="Filters"
-              data-lenis-prevent
+             
               className="slim-scroll absolute inset-y-0 left-0 w-72 max-w-[85vw] overflow-y-auto bg-white p-5 text-foreground"
             >
               <div className="mb-4 flex items-center justify-between">

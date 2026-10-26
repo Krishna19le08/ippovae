@@ -1,7 +1,6 @@
 "use client";
 import { Suspense } from "react";
 import { useSearchParams } from "next/navigation";
-import Choreo from "@/components/Choreo";
 import Header from "@/components/Header";
 import ProductDetail from "@/components/ProductDetail";
 
@@ -14,7 +13,6 @@ function View() {
 export default function ProductViewPage() {
   return (
     <>
-      <Choreo />
       <Header />
       <Suspense>
         <View />

@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { ChevronRight, LifeBuoy, Truck } from "lucide-react";
+import { ChevronRight, LifeBuoy, Truck } from "@/components/icons";
 import StatusBadge from "@/components/platform/StatusBadge";
 import Money from "@/components/platform/Money";
 import { fmtDate } from "@/components/customer/labels";

@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useRef } from "react";
-import { ArrowLeft, Wifi } from "lucide-react";
+import { ArrowLeft, Wifi } from "@/components/icons";
 
 export const EMPTY_CARD = { number: "", name: "", expiry: "", cvv: "" };
 
@@ -179,7 +179,7 @@ function CardVisual({ card, flipped }) {
               />
               <div className="flex h-9 w-16 items-center justify-center gap-1 rounded-sm bg-white font-mono text-lg font-bold text-ink">
                 {card.cvv.split("").map((_, i) => (
-                  <span key={i} className="animate-in zoom-in-150 duration-200 motion-reduce:animate-none">
+                  <span key={i} className="anim-pop-in duration-200 motion-reduce:animate-none">
                     •
                   </span>
                 ))}

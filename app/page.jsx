@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { withBase } from "@/lib/asset";
 import {
   ArrowRight,
@@ -49,8 +50,16 @@ export default function Home() {
         <Hero />
 
         <section id="categories" className="mx-auto max-w-[1312px] scroll-mt-40 px-4 pt-12">
-          <div className="mb-5">
+          <div className="mb-5 flex items-center justify-between gap-3">
             <h2 className="text-2xl font-bold tracking-tight">Shop by category</h2>
+            <Link
+              href="/products"
+              aria-label="See more categories"
+              className="group flex shrink-0 items-center gap-1.5 py-2 text-sm font-semibold text-foreground underline-offset-4 hover:underline"
+            >
+              See more
+              <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
+            </Link>
           </div>
           <CategoryTiles />
         </section>

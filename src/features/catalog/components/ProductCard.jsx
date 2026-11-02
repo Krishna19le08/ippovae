@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
-import { inr } from "@/features/catalog/data";
+import { inr } from "@/data";
 import CartButton from "@/features/cart/components/CartButton";
 import { productHref } from "@/features/catalog/catalogStore";
 

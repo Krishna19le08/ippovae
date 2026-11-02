@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { inr } from "@/features/catalog/data";
+import { inr } from "@/data";
 import AddressBlock from "./AddressBlock";
 import Breakdown from "./Breakdown";
 

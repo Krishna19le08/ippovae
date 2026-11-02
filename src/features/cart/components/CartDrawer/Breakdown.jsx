@@ -1,4 +1,4 @@
-import { inr } from "@/features/catalog/data";
+import { inr } from "@/data";
 
 const ROW = "flex justify-between text-sm text-muted-foreground";
 

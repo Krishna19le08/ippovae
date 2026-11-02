@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { inr } from "@/features/catalog/data";
+import { inr } from "@/data";
 import { methodLabel } from "./paymentMethods";
 
 // small confetti burst around the check mark (brand colours); decorative, hidden from assistive tech

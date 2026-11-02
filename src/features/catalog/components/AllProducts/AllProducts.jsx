@@ -5,7 +5,7 @@ import { SlidersHorizontal } from "@/components/ui/icons";
 import { Button } from "@/components/ui/button";
 import BackButton from "@/components/common/BackButton";
 import ProductCard from "@/features/catalog/components/ProductCard";
-import { categories as seedCategories } from "@/features/catalog/data";
+import { categories as seedCategories } from "@/data";
 import { useCatalog, liveCategories } from "@/features/catalog/catalogStore";
 import ActiveFilters from "./ActiveFilters";
 import EmptyResults from "./EmptyResults";

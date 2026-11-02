@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { ArrowRight } from "@/components/ui/icons";
 import ProductCard from "@/features/catalog/components/ProductCard";
-import { FEATURED } from "@/features/catalog/data";
+import { FEATURED } from "@/data";
 import { useCatalog } from "@/features/catalog/catalogStore";
 
 // A horizontal shelf of products. With no props it shows the featured parts.

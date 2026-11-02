@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { HUB, SITE } from "@/features/catalog/data";
+import { HUB, SITE } from "@/data";
 
 // Thin dark strip above the header (medium screens and up).
 export default function AnnouncementBar() {

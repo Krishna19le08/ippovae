@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Menu } from "@/components/ui/icons";
-import { HUB, SITE } from "@/features/catalog/data";
+import { HUB, SITE } from "@/data";
 
 // The category links under the header (large screens only).
 export default function CategoryNav({ categories }) {

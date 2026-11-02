@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import CardPayment from "@/features/checkout/components/CardPayment";
-import { inr } from "@/features/catalog/data";
+import { inr } from "@/data";
 import AddressBlock from "./AddressBlock";
 import Breakdown from "./Breakdown";
 import MiniSummary from "./MiniSummary";

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { inr } from "@/features/catalog/data";
+import { inr } from "@/data";
 
 // Prices the basket (items, delivery, tax) once there is an address, so every figure is shown before Pay.
 // `lines` are { slug, qty, p }; the result is { status: "idle" | "loading" | "ok" | "error", ...paise amounts }.

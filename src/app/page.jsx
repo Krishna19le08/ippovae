@@ -13,7 +13,7 @@ import Hero from "@/features/catalog/components/Hero";
 import Products from "@/features/catalog/components/Products";
 import CategoryTiles from "@/features/catalog/components/CategoryTiles";
 import { Button } from "@/components/ui/button";
-import { HUB, SITE, socials, categories, products } from "@/features/catalog/data";
+import { HUB, SITE, socials, categories, products } from "@/data";
 
 const industries = [
   ["Manufacturing", "/images/manufacturing.jpg"],

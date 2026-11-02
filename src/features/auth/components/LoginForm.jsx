@@ -4,9 +4,9 @@ import GoogleButton from "@/features/auth/components/GoogleButton";
 import { AlertCircle, ExternalLink, Eye, EyeOff, Lock, Mail, User } from "@/components/ui/icons";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { SITE } from "@/features/catalog/data";
+import { SITE } from "@/data";
 import { ADDR_KEY, PROFILE_KEY, SEL_KEY } from "@/features/checkout/addresses";
-import { DEMO_ACCOUNTS, DEMO_ADDRESS, DEMO_ENABLED, DEMO_PASSWORD, DEMO_PHONE } from "@/features/auth/demo";
+import { DEMO_ACCOUNTS, DEMO_ADDRESS, DEMO_ENABLED, DEMO_PASSWORD, DEMO_PHONE } from "@/data";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 

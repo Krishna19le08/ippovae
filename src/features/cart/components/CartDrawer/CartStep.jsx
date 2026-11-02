@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Minus, Plus, ShoppingCart, Trash2 } from "@/components/ui/icons";
 import { Button } from "@/components/ui/button";
-import { inr } from "@/features/catalog/data";
+import { inr } from "@/data";
 import { PAYMENT_METHODS } from "./paymentMethods";
 
 const REMOVE_BUTTON = "-m-2.5 self-start rounded-md p-3 text-muted-foreground transition-colors hover:text-red-600";

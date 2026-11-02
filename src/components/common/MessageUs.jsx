@@ -4,7 +4,7 @@ import { createPortal } from "react-dom";
 import { AlertCircle, FileText, MessageCircle, Send, X } from "@/components/ui/icons";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { whatsappHref } from "@/features/catalog/data";
+import { whatsappHref } from "@/data";
 import { useDialogFocus } from "@/hooks/useDialogFocus";
 
 // label/title/hint/prefill let other pages reuse this as a quote request (e.g. a product's bulk quote)

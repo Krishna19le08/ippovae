@@ -8,7 +8,7 @@ import AddToCart from "@/features/cart/components/AddToCart";
 import BackButton from "@/components/common/BackButton";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { inr } from "@/features/catalog/data";
+import { inr } from "@/data";
 import { useCatalog } from "@/features/catalog/catalogStore";
 
 const ABOUT = {

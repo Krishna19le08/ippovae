@@ -10,7 +10,7 @@
 //     added:[{slug,name,price,cat,brand?,img?,hidden?,createdAt}], deleted:[slug] }
 // Every write dispatches "kn-catalog-changed" on window. Writes return { ok:true } or { ok:false, error }.
 import { useEffect, useState } from "react";
-import { products as baseProducts } from "@/features/catalog/data";
+import { products as baseProducts } from "@/data";
 import { withBase } from "@/lib/asset";
 
 export const KEY = "kn-catalog-overrides";

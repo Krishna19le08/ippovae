@@ -1,4 +1,4 @@
-import { inr } from "@/features/catalog/data";
+import { inr } from "@/data";
 
 // One-line "3 items · Items ₹1,200" reminder shown above the address and payment steps.
 export default function MiniSummary({ count, total }) {

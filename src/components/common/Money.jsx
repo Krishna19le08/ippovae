@@ -1,4 +1,4 @@
-import { inr } from "@/features/catalog/data";
+import { inr } from "@/data";
 
 /** Integer paise to INR text, same style as the shop. */
 export const formatMoney = (paise) => (Number.isFinite(paise) ? inr(paise / 100) : "—");

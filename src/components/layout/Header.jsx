@@ -18,7 +18,7 @@ import LoginModal from "@/features/auth/components/LoginModal";
 import ProfileModal from "@/features/auth/components/ProfileModal";
 import { useSignedInUser } from "@/features/auth/useSignedInUser";
 import { getProfile, useAddresses } from "@/features/checkout/addresses";
-import { categories as seedCategories } from "@/features/catalog/data";
+import { categories as seedCategories } from "@/data";
 import { useCatalog, liveCategories } from "@/features/catalog/catalogStore";
 
 // The site header. It also owns the cart drawer and the sign-in/profile dialogs, because they open from several

@@ -1,5 +1,5 @@
 import ProductDetail from "@/features/catalog/components/ProductDetail";
-import { products } from "@/features/catalog/data";
+import { products } from "@/data";
 
 // Seed products are pre-built; other slugs (added in the local admin) render on demand. The body is a client
 // component, so it shows this browser's catalog and its own not-found state.

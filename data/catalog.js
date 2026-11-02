@@ -1,7 +1,7 @@
 import { withBase } from "@/lib/asset";
-import data from "@/lib/markdown.json";
+import data from "./markdown.json";
 
-// All catalogue and site data lives in lib/markdown.json.
+// All catalogue and site data lives in data/markdown.json.
 export const SITE = data.site;
 export const SHOP = `${SITE}/copy-of-bearings`;
 export const HUB = `${SITE}/k-now-hub`;

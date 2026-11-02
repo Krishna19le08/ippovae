@@ -4,7 +4,7 @@ import Link from "next/link";
 import { ArrowLeft, Banknote, Check, CreditCard, Landmark, MapPin, Minus, Plus, ShoppingCart, Smartphone, Trash2, X } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import AddressBook from "@/components/checkout/AddressBook";
-import { inr } from "@/lib/data";
+import { inr } from "@/data";
 import { useCatalog } from "@/lib/admin/catalog";
 import CardPayment, { EMPTY_CARD, cvvError, frontErrors } from "@/components/checkout/CardPayment";
 import { addressLines, useAddresses } from "@/lib/addresses";

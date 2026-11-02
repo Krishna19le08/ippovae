@@ -13,7 +13,7 @@ import AccountMenu from "@/components/AccountMenu";
 import MobileTabBar from "@/components/MobileTabBar";
 import AccountSheet from "@/components/AccountSheet";
 import { getProfile, useAddresses, USER_EVENT } from "@/lib/addresses";
-import { HUB, SITE, categories as baseCats } from "@/lib/data";
+import { HUB, SITE, categories as baseCats } from "@/data";
 import { useCatalog, liveCategories } from "@/lib/admin/catalog";
 
 // set when a search is submitted: the next page's header takes focus back into the search box (navigation remounts it)

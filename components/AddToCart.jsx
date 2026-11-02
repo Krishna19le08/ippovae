@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Check, Minus, Plus, Zap } from "@/components/icons";
 import { Button } from "@/components/ui/button";
-import { inr } from "@/lib/data";
+import { inr } from "@/data";
 import { useCartQty } from "@/lib/useCartQty";
 import CartButton from "@/components/CartButton";
 

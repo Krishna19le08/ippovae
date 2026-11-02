@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import ProductCard from "@/components/ProductCard";
 import BackButton from "@/components/BackButton";
-import { categories as baseCats } from "@/lib/data";
+import { categories as baseCats } from "@/data";
 import { useCatalog, liveCategories } from "@/lib/admin/catalog";
 
 const parseList = (v) => (v ? v.split(",").filter(Boolean) : []);

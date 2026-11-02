@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { ArrowRight } from "@/components/icons";
-import { categories as baseCats } from "@/lib/data";
+import { categories as baseCats } from "@/data";
 import { useCatalog, liveCategories } from "@/lib/admin/catalog";
 
 // Round category icons, like a shopping app's top row.

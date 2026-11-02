@@ -1,4 +1,5 @@
 "use client";
+import { Fragment } from "react";
 import { withBase } from "@/lib/asset";
 import Money from "@/components/common/Money";
 import { METHOD, fmtDate } from "@/features/orders/labels";
@@ -56,10 +57,10 @@ export default function Invoice({ order, payment, className = "" }) {
 
       <dl className="mt-4 ml-auto grid max-w-xs grid-cols-[1fr_auto] gap-x-6 gap-y-1 text-sm">
         <dt>Subtotal</dt><dd className="text-right"><Money paise={order.subtotal} /></dd>
-        {order.discount > 0 && (<><dt>Discount</dt><dd className="text-right"><Money paise={-order.discount} signed /></dd></>)}
+        {order.discount > 0 && (<Fragment><dt>Discount</dt><dd className="text-right"><Money paise={-order.discount} signed /></dd></Fragment>)}
         <dt>Delivery</dt><dd className="text-right">{order.delivery_fee > 0 ? <Money paise={order.delivery_fee} /> : "Free"}</dd>
-        {order.tax > 0 && (<><dt>Tax</dt><dd className="text-right"><Money paise={order.tax} /></dd></>)}
-        {order.short_adjustment > 0 && (<><dt>Items not available</dt><dd className="text-right"><Money paise={-order.short_adjustment} signed /></dd></>)}
+        {order.tax > 0 && (<Fragment><dt>Tax</dt><dd className="text-right"><Money paise={order.tax} /></dd></Fragment>)}
+        {order.short_adjustment > 0 && (<Fragment><dt>Items not available</dt><dd className="text-right"><Money paise={-order.short_adjustment} signed /></dd></Fragment>)}
         <dt className="border-t border-border pt-1 font-bold">Total</dt><dd className="border-t border-border pt-1 text-right font-bold"><Money paise={order.total} /></dd>
       </dl>
       <p className="mt-4 text-xs text-muted-foreground">This is an order summary from the ippovae demo platform. It is not a tax invoice.</p>

@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { ArrowLeft, ChevronRight, ClipboardList, ExternalLink, Layers, LogOut, MapPin, Package, ShoppingCart, Store, Tag, UserRound } from "@/components/ui/icons";
 import { Button } from "@/components/ui/button";
@@ -113,14 +113,14 @@ export default function AccountSheet({ open, suspended, user, label, returnRef, 
             <h3 className={heading}>Your account</h3>
             <div className={group}>
               {user && (
-                <>
+                <Fragment>
                   <Row icon={UserRound} onClick={push(() => onProfile(""))}>
                     Your profile
                   </Row>
                   <Row icon={MapPin} onClick={push(() => onProfile("address"))}>
                     Saved addresses
                   </Row>
-                </>
+                </Fragment>
               )}
               <Link href="/orders" onClick={onClose} className={row}>
                 <span className={iconBox}>

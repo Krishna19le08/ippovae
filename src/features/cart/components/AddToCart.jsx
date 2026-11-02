@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import { Check, Minus, Plus, Zap } from "@/components/ui/icons";
 import { Button } from "@/components/ui/button";
 import { inr } from "@/data";
@@ -103,10 +103,10 @@ export default function AddToCart({ slug, price }) {
 
       <p role="status" aria-live="polite" className="sr-only">
         {msg && (
-          <>
+          <Fragment>
             <Check className="mr-1 inline size-4 align-[-3px]" aria-hidden="true" />
             {msg}
-          </>
+          </Fragment>
         )}
       </p>
 

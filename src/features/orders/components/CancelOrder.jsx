@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useId, useRef, useState } from "react";
+import { Fragment, useEffect, useId, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import Link from "next/link";
 import { Ban, Clock, Info } from "@/components/ui/icons";
@@ -123,15 +123,15 @@ export default function CancelOrder({ order, p, actor }) {
     );
   } else if (order.cancel_request_status === "denied") {
     body = (
-      <>
+      <Fragment>
         <p className="text-sm">The store could not cancel this order{order.cancel_deny_reason ? `: ${order.cancel_deny_reason}` : "."}</p>
         <p className="mt-1 text-sm text-muted-foreground">Next step: if you still need help, <Link href={ticketHref(id, "cancellation")} className="font-semibold text-foreground underline underline-offset-4">contact support</Link>.</p>
-      </>
+      </Fragment>
     );
   } else if (el.allowed) {
     const request = el.mode === "request";
     body = (
-      <>
+      <Fragment>
         <p className="text-sm text-muted-foreground">
           {request
             ? "The store has started preparing your order. You can ask to cancel, and the store decides."
@@ -141,7 +141,7 @@ export default function CancelOrder({ order, p, actor }) {
           <Ban aria-hidden="true" /> {request ? "Request cancellation" : "Cancel order"}
         </Button>
         <CancelDialog order={order} mode={el.mode} open={open} p={p} actor={actor} onClose={() => setOpen(false)} onDone={(d) => { setOpen(false); setOutcome(d); }} />
-      </>
+      </Fragment>
     );
   } else {
     const why =
@@ -151,7 +151,7 @@ export default function CancelOrder({ order, p, actor }) {
       : "This order cannot be cancelled in its current state.";
     const actions = el.next_actions || [];
     body = (
-      <>
+      <Fragment>
         <p className="text-sm">{why}</p>
         {actions.length > 0 && (
           <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-muted-foreground">
@@ -165,7 +165,7 @@ export default function CancelOrder({ order, p, actor }) {
             </Link>
           </Button>
         </div>
-      </>
+      </Fragment>
     );
   }
 

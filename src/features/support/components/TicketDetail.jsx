@@ -1,5 +1,5 @@
 "use client";
-import { useRef, useState } from "react";
+import { Fragment, useRef, useState } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { ArrowLeft, Paperclip, Send } from "@/components/ui/icons";
@@ -87,7 +87,7 @@ function Body({ data, actor }) {
         </div>
         <p className="mt-1 text-sm text-muted-foreground">
           <span className="font-mono">{t.display_no}</span> · {categoryLabel(t.category)} · Opened {fmtDateTime(t.created_at)}
-          {order && <> · <Link href={`/orders/${encodeURIComponent(order.id)}`} className="font-semibold text-foreground underline underline-offset-4">Order {order.display_no}</Link></>}
+          {order && <Fragment> · <Link href={`/orders/${encodeURIComponent(order.id)}`} className="font-semibold text-foreground underline underline-offset-4">Order {order.display_no}</Link></Fragment>}
         </p>
         {t.status === "WAITING_FOR_CUSTOMER" && <p className="mt-2 rounded-md bg-amber-50 p-3 text-sm text-amber-900" role="status">We are waiting for your reply. Answer below so we can continue.</p>}
         {!t.first_responded_at && !closed && !resolved && <p className="mt-1 text-xs text-muted-foreground">We aim to reply by {fmtDateTime(t.first_response_due_at)}. This is a target.</p>}

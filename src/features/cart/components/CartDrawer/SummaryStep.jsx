@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import { Button } from "@/components/ui/button";
 import { inr } from "@/data";
 import AddressBlock from "./AddressBlock";
@@ -6,7 +7,7 @@ import Breakdown from "./Breakdown";
 // Step 3: review the address and items, see the priced breakdown, then continue to payment.
 export default function SummaryStep({ address, lines, count, quote, onChangeAddress, onContinue }) {
   return (
-    <>
+    <Fragment>
       <div className="flex-1 space-y-4 overflow-y-auto px-4 py-4">
         <AddressBlock address={address} onChange={onChangeAddress} />
         <section aria-label="Items in your order">
@@ -35,6 +36,6 @@ export default function SummaryStep({ address, lines, count, quote, onChangeAddr
           Continue to payment
         </Button>
       </div>
-    </>
+    </Fragment>
   );
 }

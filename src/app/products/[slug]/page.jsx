@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import ProductDetail from "@/features/catalog/components/ProductDetail";
 import { products } from "@/data";
 
@@ -16,8 +17,8 @@ export async function generateMetadata({ params }) {
 export default async function ProductPage({ params }) {
   const { slug } = await params;
   return (
-    <>
+    <Fragment>
       <ProductDetail slug={slug} />
-    </>
+    </Fragment>
   );
 }

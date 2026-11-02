@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { ShoppingCart } from "@/components/ui/icons";
 import { withBase } from "@/lib/asset";
@@ -121,7 +121,7 @@ export default function Header() {
   const openDeliveryAddress = (button) => openProfile(deliverTo ? "address" : "address-new", button);
 
   return (
-    <>
+    <Fragment>
       <p role="status" aria-live="polite" className="sr-only">{cart.announcement}</p>
 
       <AnnouncementBar />
@@ -237,6 +237,6 @@ export default function Header() {
           startCheckout();
         }}
       />
-    </>
+    </Fragment>
   );
 }

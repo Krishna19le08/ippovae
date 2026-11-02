@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import Link from "next/link";
 import { withBase } from "@/lib/asset";
 import {
@@ -42,7 +43,7 @@ const stats = [
 
 export default function Home() {
   return (
-    <>
+    <Fragment>
 
       <main id="main-content" tabIndex={-1} className="outline-none">
         <Hero />
@@ -213,6 +214,6 @@ export default function Home() {
           </div>
         </div>
       </footer>
-    </>
+    </Fragment>
   );
 }

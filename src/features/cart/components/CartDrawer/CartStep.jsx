@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import Link from "next/link";
 import { Minus, Plus, ShoppingCart, Trash2 } from "@/components/ui/icons";
 import { Button } from "@/components/ui/button";
@@ -58,7 +59,7 @@ export default function CartStep({ lines, unavailable, total, setQty, onClose, o
   const methodNames = PAYMENT_METHODS.map((m) => m.label);
 
   return (
-    <>
+    <Fragment>
       <div className="flex-1 overflow-y-auto px-4 py-2">
         {isEmpty ? (
           <div className="flex h-full flex-col items-center justify-center gap-2 text-muted-foreground">
@@ -90,6 +91,6 @@ export default function CartStep({ lines, unavailable, total, setQty, onClose, o
           </p>
         </div>
       )}
-    </>
+    </Fragment>
   );
 }

@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { ArrowLeft, Check, CreditCard, FileText, LifeBuoy, Printer, RotateCcw } from "@/components/ui/icons";
@@ -129,7 +129,7 @@ function Body({ order, actor }) {
         </div>
         <p className="mt-1 text-sm text-muted-foreground">
           Placed {fmtDateTime(order.placed_at)} · Total <Money paise={order.total} className="font-semibold text-foreground" /> · {METHOD[order.payment_method] || order.payment_method}
-          {order.legacy_id ? <> · Shop ref <span className="font-mono">{order.legacy_id}</span></> : null}
+          {order.legacy_id ? <Fragment> · Shop ref <span className="font-mono">{order.legacy_id}</span></Fragment> : null}
         </p>
         {cancelled && order.cancel_reason && <p className="mt-1 text-sm text-muted-foreground">Cancelled{order.cancelled_at ? ` on ${fmtDate(order.cancelled_at)}` : ""}. Reason: {cancelReasonLabel(order.cancel_reason)}.</p>}
       </div>
@@ -158,9 +158,9 @@ function Body({ order, actor }) {
             </ul>
             <dl className="mt-2 ml-auto grid max-w-xs grid-cols-[1fr_auto] gap-x-6 gap-y-1 text-sm">
               <dt>Subtotal</dt><dd className="text-right"><Money paise={order.subtotal} /></dd>
-              {order.discount > 0 && (<><dt>Discount</dt><dd className="text-right"><Money paise={-order.discount} signed /></dd></>)}
+              {order.discount > 0 && (<Fragment><dt>Discount</dt><dd className="text-right"><Money paise={-order.discount} signed /></dd></Fragment>)}
               <dt>Delivery</dt><dd className="text-right">{order.delivery_fee > 0 ? <Money paise={order.delivery_fee} /> : "Free"}</dd>
-              {order.tax > 0 && (<><dt>Tax</dt><dd className="text-right"><Money paise={order.tax} /></dd></>)}
+              {order.tax > 0 && (<Fragment><dt>Tax</dt><dd className="text-right"><Money paise={order.tax} /></dd></Fragment>)}
               <dt className="font-bold">Total</dt><dd className="text-right font-bold"><Money paise={order.total} /></dd>
             </dl>
             <p className="mt-3 text-sm text-muted-foreground">

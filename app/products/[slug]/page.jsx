@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import ProductDetail from "@/components/ProductDetail";
-import { products } from "@/lib/data";
+import { products } from "@/data";
 
 // Seed products are exported as static pages; the body is a client component so this browser's admin edits apply.
 export function generateStaticParams() {

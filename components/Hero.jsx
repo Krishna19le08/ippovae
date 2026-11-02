@@ -4,7 +4,7 @@ import Link from "next/link";
 import MessageUs from "@/components/MessageUs";
 import { ArrowRight, Truck, BadgeCheck, Headset, CreditCard } from "@/components/icons";
 import { Button } from "@/components/ui/button";
-import { inr } from "@/lib/data";
+import { inr } from "@/data";
 import { useCatalog, productHref } from "@/lib/admin/catalog";
 
 const tiles = [

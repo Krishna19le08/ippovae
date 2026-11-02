@@ -5,7 +5,7 @@ import { createPortal } from "react-dom";
 import { ArrowLeft, ChevronRight, ClipboardList, ExternalLink, Layers, LogOut, MapPin, Package, ShoppingCart, Store, Tag, UserRound } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { useDialogFocus } from "@/lib/useDialogFocus";
-import { HUB, SITE } from "@/lib/data";
+import { HUB, SITE } from "@/data";
 
 const BEARINGS = ["Ball Bearings", "Roller Bearings", "Mounted Bearings", "Thrust Bearings"];
 

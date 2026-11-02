@@ -511,13 +511,13 @@ export default function AllProducts() {
                 </Button>
               )}
               {categories.slice(0, 4).map((c) => (
-                <a
+                <Link
                   key={c.name}
                   href={`/products?cat=${encodeURIComponent(c.name)}`}
                   className="rounded-full border border-border px-4 py-2.5 text-sm font-medium hover:border-foreground hover:text-foreground"
                 >
                   {c.name}
-                </a>
+                </Link>
               ))}
             </div>
           </div>

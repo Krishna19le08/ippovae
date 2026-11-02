@@ -55,7 +55,11 @@ function Root({ children }) {
   // coalesce bursts of change events into one render
   useEffect(() => {
     let timer = 0;
-    const bump = () => {
+    // audit/bookkeeping writes (e.g. the audit row a failed read records) must not re-run queries, or a failing read loops forever
+    const QUIET = new Set(["audit_logs", "counters", "idempotency_keys"]);
+    const bump = (e) => {
+      const cols = e?.collections ?? e?.detail?.collections;
+      if (cols?.length && cols.every((c) => QUIET.has(c))) return;
       if (timer) return;
       timer = setTimeout(() => { timer = 0; setTick((n) => n + 1); }, 0);
     };

@@ -1,5 +1,4 @@
 import { Suspense } from "react";
-import Header from "@/components/Header";
 import AllProducts from "@/components/AllProducts";
 
 // Title follows the filter: one category, a search query, or the plain listing.
@@ -18,7 +17,6 @@ export async function generateMetadata({ searchParams }) {
 export default function ProductsPage() {
   return (
     <>
-      <Header />
       <main id="main-content" tabIndex={-1} className="mx-auto max-w-[1312px] px-4 pt-10 pb-10 outline-none max-lg:pt-0 lg:pb-0">
         <Suspense>
           <AllProducts />

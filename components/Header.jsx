@@ -13,7 +13,7 @@ import AccountMenu from "@/components/AccountMenu";
 import MobileTabBar from "@/components/MobileTabBar";
 import AccountSheet from "@/components/AccountSheet";
 import { getProfile, useAddresses, USER_EVENT } from "@/lib/addresses";
-import { SHOP, HUB, SITE, categories as baseCats } from "@/lib/data";
+import { HUB, SITE, categories as baseCats } from "@/lib/data";
 import { useCatalog, liveCategories } from "@/lib/admin/catalog";
 
 // set when a search is submitted: the next page's header takes focus back into the search box (navigation remounts it)
@@ -253,7 +253,7 @@ export default function Header() {
         <div className="mx-auto flex max-w-[1312px] items-center justify-between px-4 py-2">
           <span>Trusted supplier of bearings &amp; belts · Fast delivery</span>
           <span className="hidden gap-3 sm:flex">
-            <a href={SHOP}>Catalogue</a>|<a href={HUB} className="normal-case">ippovae Hub</a>|
+            <Link href="/products">Catalogue</Link>|<a href={HUB} className="normal-case">ippovae Hub</a>|
             <a href={`${SITE}/faq`}>Contact</a>
           </span>
         </div>
@@ -268,7 +268,7 @@ export default function Header() {
         aria-hidden="true"
       />
 
-      <header className="sticky -top-[54px] z-50 border-b border-white/10 md:top-0 surface-ink bg-ink text-white">
+      <header className="print:hidden sticky -top-[54px] z-50 border-b border-white/10 md:top-0 surface-ink bg-ink text-white">
         <div className="mx-auto flex max-w-[1312px] flex-wrap items-center gap-x-4 gap-y-2 px-4 py-2.5 md:flex-nowrap md:gap-8">
           <Link href="/" className="shrink-0">
             <img src={withBase("/logo.png")} alt="ippovae" width={118} height={40} className="h-10 w-auto md:h-12" />

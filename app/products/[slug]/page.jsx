@@ -1,5 +1,4 @@
 import { notFound } from "next/navigation";
-import Header from "@/components/Header";
 import ProductDetail from "@/components/ProductDetail";
 import { products } from "@/lib/data";
 
@@ -20,7 +19,6 @@ export default async function ProductPage({ params }) {
 
   return (
     <>
-      <Header />
       <ProductDetail slug={slug} />
     </>
   );

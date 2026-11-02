@@ -1,15 +1,16 @@
 import localFont from "next/font/local";
 import "./globals.css";
+import Header from "@/components/Header";
 import KeyboardAssist from "@/components/KeyboardAssist";
 import { withBase } from "@/lib/asset";
 
 const inter = localFont({
   src: [
-    { path: "./fonts/Inter-400.ttf", weight: "400", style: "normal" },
-    { path: "./fonts/Inter-500.ttf", weight: "500", style: "normal" },
-    { path: "./fonts/Inter-600.ttf", weight: "600", style: "normal" },
-    { path: "./fonts/Inter-700.ttf", weight: "700", style: "normal" },
-    { path: "./fonts/Inter-800.ttf", weight: "800", style: "normal" },
+    { path: "./fonts/Inter-400.woff", weight: "400", style: "normal" },
+    { path: "./fonts/Inter-500.woff", weight: "500", style: "normal" },
+    { path: "./fonts/Inter-600.woff", weight: "600", style: "normal" },
+    { path: "./fonts/Inter-700.woff", weight: "700", style: "normal" },
+    { path: "./fonts/Inter-800.woff", weight: "800", style: "normal" },
   ],
   variable: "--font-inter",
   display: "swap",
@@ -37,6 +38,7 @@ export default function RootLayout({ children }) {
         >
           Skip to main content
         </a>
+        <Header />
         {children}
         <KeyboardAssist />
       </body>

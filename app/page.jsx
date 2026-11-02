@@ -9,12 +9,11 @@ import {
   BadgeCheck,
   Boxes,
 } from "@/components/icons";
-import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import Products from "@/components/Products";
 import CategoryTiles from "@/components/CategoryTiles";
 import { Button } from "@/components/ui/button";
-import { SHOP, HUB, SITE, socials, categories, products } from "@/lib/data";
+import { HUB, SITE, socials, categories, products } from "@/lib/data";
 
 const industries = [
   ["Manufacturing", "/images/manufacturing.jpg"],
@@ -44,7 +43,6 @@ const stats = [
 export default function Home() {
   return (
     <>
-      <Header />
 
       <main id="main-content" tabIndex={-1} className="outline-none">
         <Hero />
@@ -85,12 +83,12 @@ export default function Home() {
 
         <section className="mx-auto grid max-w-[1312px] gap-5 px-4 pt-12 md:grid-cols-2">
           {[
-            ["bearings", "Bearings for Every Application", "Deep groove, spherical roller, thrust and mounted units.", "Shop Bearings"],
-            ["conveyor", "Belts from ₹194", "Belt fenners and belts in A, B and C sections.", "Shop Belts"],
-          ].map(([img, t, d, cta]) => (
-            <a
+            ["bearings", "Bearings for Every Application", "Deep groove, spherical roller, thrust and mounted units.", "Shop Bearings", "Ball Bearings"],
+            ["conveyor", "Belts from ₹194", "Belt fenners and belts in A, B and C sections.", "Shop Belts", "Belts"],
+          ].map(([img, t, d, cta, cat]) => (
+            <Link
               key={img}
-              href={SHOP}
+              href={`/products?cat=${encodeURIComponent(cat)}`}
               className="group relative flex min-h-64 items-center overflow-hidden rounded-xl surface-ink bg-ink bg-cover bg-center p-8 text-white"
               style={{ backgroundImage: `url(${withBase(`/images/${img}.jpg`)})` }}
             >
@@ -102,7 +100,7 @@ export default function Home() {
                   {cta} <ArrowRight className="size-4" />
                 </span>
               </div>
-            </a>
+            </Link>
           ))}
         </section>
 
@@ -110,7 +108,7 @@ export default function Home() {
           <h2 className="mb-5 text-2xl font-bold tracking-tight">Parts for Every Industry</h2>
           <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
             {industries.map(([n, src]) => (
-              <a key={n} href={SHOP} className="group relative block aspect-[4/3] overflow-hidden rounded-xl">
+              <Link key={n} href="/products" className="group relative block aspect-[4/3] overflow-hidden rounded-xl">
                 <img
                   src={withBase(src)}
                   alt=""
@@ -122,7 +120,7 @@ export default function Home() {
                   {n}
                   <ArrowRight className="size-4 -translate-x-1 text-lime opacity-0 transition-all group-hover:translate-x-0 group-hover:opacity-100" />
                 </span>
-              </a>
+              </Link>
             ))}
           </div>
         </section>
@@ -184,15 +182,21 @@ export default function Home() {
           </div>
           {[
             ["Quick Links", [["Categories", "#categories"], ["Products", "/products"], ["Brands", "#brands"]]],
-            ["Shop", [["Catalogue", SHOP], ["ippovae Hub", HUB], ["Contact", `${SITE}/faq`]]],
+            ["Shop", [["Catalogue", "/products"], ["ippovae Hub", HUB], ["Contact", `${SITE}/faq`]]],
             ["Follow", socials],
           ].map(([title, links]) => (
             <div key={title} className="grid content-start gap-3 lg:border-l lg:border-white/10 lg:pl-8">
               <h2 className="font-mono text-xs font-semibold tracking-[0.16em] text-white/80 uppercase">{title}</h2>
               {links.map(([n, u]) => (
-                <a key={n} href={u} className="w-fit py-1 max-md:py-3 text-white/50 transition-colors hover:text-white">
-                  {n}
-                </a>
+                u.startsWith("/") ? (
+                  <Link key={n} href={u} className="w-fit py-1 max-md:py-3 text-white/50 transition-colors hover:text-white">
+                    {n}
+                  </Link>
+                ) : (
+                  <a key={n} href={u} className="w-fit py-1 max-md:py-3 text-white/50 transition-colors hover:text-white">
+                    {n}
+                  </a>
+                )
               ))}
             </div>
           ))}

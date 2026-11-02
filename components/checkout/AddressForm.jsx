@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useId, useRef, useState } from "react";
-import { AlertCircle, Loader2, LocateFixed } from "lucide-react";
+import { AlertCircle, Loader2, LocateFixed } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { PHONE_RE, PIN_RE, profileDefaults } from "@/lib/addresses";

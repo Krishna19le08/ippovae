@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import { Minus, Plus, ShoppingCart } from "lucide-react";
+import { Minus, Plus, ShoppingCart } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { useCartQty } from "@/lib/useCartQty";
 import { flyToCart } from "@/lib/flyToCart";
@@ -38,11 +38,11 @@ export default function CartButton({ slug, name = "", qty = 1, className = "", b
 
   if (inCart > 0) {
     return (
-      <div className={`animate-in fade-in zoom-in-95 motion-reduce:animate-none flex items-center justify-between rounded-xl border border-foreground bg-accent text-foreground duration-300 ${className}`}>
+      <div className={`anim-fade-zoom-in motion-reduce:animate-none flex items-center justify-between rounded-xl border border-foreground bg-accent text-foreground duration-300 ${className}`}>
         <button className="h-full px-4" aria-label={`Decrease quantity${name ? ` of ${name}` : ""}`} onClick={() => fire("kn-cart-set", { slug, qty: inCart - 1 })}>
           <Minus className="size-4" aria-hidden="true" />
         </button>
-        <span key={inCart} className="animate-in zoom-in-150 motion-reduce:animate-none font-semibold duration-200">{inCart}</span>
+        <span key={inCart} className="anim-pop-in motion-reduce:animate-none font-semibold duration-200">{inCart}</span>
         <button className="h-full px-4" aria-label={`Increase quantity${name ? ` of ${name}` : ""}`} onClick={() => fire("kn-cart-set", { slug, qty: inCart + 1 })}>
           <Plus className="size-4" aria-hidden="true" />
         </button>

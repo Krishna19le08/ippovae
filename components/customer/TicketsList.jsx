@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { LifeBuoy, Plus } from "lucide-react";
+import { LifeBuoy, Plus } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import QueryState, { EmptyState } from "@/components/platform/ErrorNotice";
 import StatusBadge from "@/components/platform/StatusBadge";

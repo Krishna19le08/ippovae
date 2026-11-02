@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useRef } from "react";
-import { ArrowLeft, Wifi } from "lucide-react";
+import { ArrowLeft, Wifi } from "@/components/icons";
 
 export const EMPTY_CARD = { number: "", name: "", expiry: "", cvv: "" };
 
@@ -179,7 +179,7 @@ function CardVisual({ card, flipped }) {
               />
               <div className="flex h-9 w-16 items-center justify-center gap-1 rounded-sm bg-white font-mono text-lg font-bold text-ink">
                 {card.cvv.split("").map((_, i) => (
-                  <span key={i} className="animate-in zoom-in-150 duration-200 motion-reduce:animate-none">
+                  <span key={i} className="anim-pop-in duration-200 motion-reduce:animate-none">
                     •
                   </span>
                 ))}
@@ -219,6 +219,9 @@ export default function CardPayment({ card, setCard, stage, errors, onBack }) {
 
   return (
     <div className="space-y-4">
+      <p role="note" className="rounded-md border border-amber-300 bg-amber-50 px-3 py-2 text-sm font-medium text-amber-900">
+        Demo only. Do not enter real card details.
+      </p>
       <CardVisual card={card} flipped={back} />
 
       {back ? (
@@ -238,7 +241,6 @@ export default function CardPayment({ card, setCard, stage, errors, onBack }) {
               ref={cvvRef}
               type="password"
               inputMode="numeric"
-              autoComplete="cc-csc"
               maxLength={3}
               value={card.cvv}
               onChange={(e) => setCard((c) => ({ ...c, cvv: digits(e.target.value).slice(0, 3) }))}
@@ -253,7 +255,6 @@ export default function CardPayment({ card, setCard, stage, errors, onBack }) {
               {...props("card-number", errors.number)}
               ref={numberRef}
               inputMode="numeric"
-              autoComplete="cc-number"
               value={card.number}
               onChange={set("number", formatNumber)}
               placeholder="1234 5678 9012 3456"
@@ -262,7 +263,6 @@ export default function CardPayment({ card, setCard, stage, errors, onBack }) {
           <Field id="card-name" label="Name on card" error={errors.name}>
             <input
               {...props("card-name", errors.name)}
-              autoComplete="cc-name"
               value={card.name}
               onChange={set("name", (v) => v.slice(0, 26))}
               placeholder="As printed on the card"
@@ -272,7 +272,6 @@ export default function CardPayment({ card, setCard, stage, errors, onBack }) {
             <input
               {...props("card-expiry", errors.expiry)}
               inputMode="numeric"
-              autoComplete="cc-exp"
               value={card.expiry}
               onChange={set("expiry", formatExpiry)}
               placeholder="MM/YY"

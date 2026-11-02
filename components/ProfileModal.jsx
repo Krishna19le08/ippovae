@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import { AlertCircle, ArrowLeft, LogOut, UserRound, X } from "lucide-react";
+import { AlertCircle, ArrowLeft, LogOut, UserRound, X } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import AddressBook from "@/components/checkout/AddressBook";
@@ -87,7 +87,7 @@ export default function ProfileModal({ open, onClose, onSignOut, section = "", r
         className="relative flex max-h-full w-full max-w-md flex-col overflow-hidden rounded-3xl bg-white text-foreground shadow-2xl max-md:h-full max-md:max-w-none max-md:rounded-none max-md:shadow-none"
       >
         {/* the card clips to its rounded corners; the inner box scrolls, so the scrollbar stays inside the card */}
-        <div data-lenis-prevent className="min-h-0 flex-1 overflow-y-auto overscroll-contain p-6 pb-8 max-md:p-4 max-md:pt-0 max-md:pb-8 md:p-8 md:pb-8">
+        <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain p-6 pb-8 max-md:p-4 max-md:pt-0 max-md:pb-8 md:p-8 md:pb-8">
         {/* phones: full-screen page with an app bar instead of a floating card */}
         <div className="sticky top-0 z-10 -mx-4 mb-5 flex items-center gap-1 border-b border-slate-200 bg-white px-2 pb-2 pt-[max(0.5rem,env(safe-area-inset-top))] md:hidden">
           <button type="button" onClick={onClose} aria-label="Back" className="flex size-11 items-center justify-center rounded-full active:bg-slate-100">

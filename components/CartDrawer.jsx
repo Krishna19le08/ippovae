@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { ArrowLeft, Banknote, Check, CreditCard, Landmark, MapPin, Minus, Plus, ShoppingCart, Smartphone, Trash2, X } from "lucide-react";
+import { ArrowLeft, Banknote, Check, CreditCard, Landmark, MapPin, Minus, Plus, ShoppingCart, Smartphone, Trash2, X } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import AddressBook from "@/components/checkout/AddressBook";
 import { inr } from "@/lib/data";
@@ -9,8 +9,6 @@ import { useCatalog } from "@/lib/admin/catalog";
 import CardPayment, { EMPTY_CARD, cvvError, frontErrors } from "@/components/checkout/CardPayment";
 import { addressLines, useAddresses } from "@/lib/addresses";
 import { useDialogFocus } from "@/lib/useDialogFocus";
-import { saveOrder } from "@/lib/orders";
-import { mirrorToPlatform } from "@/components/customer/bridge";
 
 const METHODS = [
   { id: "upi", label: "UPI", note: "GPay, PhonePe, Paytm", Icon: Smartphone },
@@ -82,11 +80,27 @@ function StepIndicator({ step }) {
   );
 }
 
+// Items, delivery and tax from the platform quote (paise), shown before the customer pays.
+function Breakdown({ quote }) {
+  if (quote.status === "error") return <p role="alert" className="mb-3 text-sm font-medium text-red-700">{quote.message}</p>;
+  if (quote.status !== "ok") return <p role="status" className="mb-3 text-sm text-muted-foreground">Calculating delivery and total...</p>;
+  const row = "flex justify-between text-sm text-muted-foreground";
+  return (
+    <div className="mb-3 space-y-1">
+      <p className={row}><span>Items</span><span>{inr(quote.subtotal / 100)}</span></p>
+      {quote.discount > 0 && <p className={row}><span>Discount</span><span>-{inr(quote.discount / 100)}</span></p>}
+      <p className={row}><span>Delivery</span><span>{quote.delivery_fee > 0 ? inr(quote.delivery_fee / 100) : "Free"}</span></p>
+      {quote.tax > 0 && <p className={row}><span>Tax</span><span>{inr(quote.tax / 100)}</span></p>}
+      <p className="flex justify-between pt-1 font-semibold"><span>Total</span><span>{inr(quote.total / 100)}</span></p>
+    </div>
+  );
+}
+
 function MiniSummary({ count, total }) {
   return (
     <p className="flex justify-between rounded-lg bg-slate-50 px-3 py-2 text-sm">
       <span className="text-muted-foreground">{plural(count)}</span>
-      <span className="font-semibold">Total {inr(total)}</span>
+      <span className="font-semibold">Items {inr(total)}</span>
     </p>
   );
 }
@@ -122,9 +136,11 @@ export default function CartDrawer({ open, onClose, items, view, setQty, clear, 
   const [card, setCard] = useState(EMPTY_CARD);
   const [cardStage, setCardStage] = useState("front"); // front: number/name/expiry; back: CVV
   const [cardErrors, setCardErrors] = useState({});
-  const [orderId, setOrderId] = useState("");
   const [doneName, setDoneName] = useState("");
-  const [liveNote, setLiveNote] = useState(null);
+  const [placed, setPlaced] = useState(null); // { no, total, fee } in rupees
+  const [placeError, setPlaceError] = useState("");
+  const [quote, setQuote] = useState({ status: "idle" }); // idle | loading | ok | error; ok carries paise amounts
+  const orderKey = useRef(null);
   const { selected, ready } = useAddresses();
   // all entries incl. hidden ones, so a product hidden by the admin can still be bought from a saved cart
   const { list: catalog, ready: catalogReady } = useCatalog({ includeHidden: true });
@@ -161,13 +177,33 @@ export default function CartDrawer({ open, onClose, items, view, setQty, clear, 
   const total = lines.reduce((s, l) => s + l.p.price * l.qty, 0);
   const count = lines.reduce((s, l) => s + l.qty, 0);
 
+  // price the basket (items, delivery, tax) once there is an address, so every figure is shown before Pay
+  const basketKey = lines.map((l) => `${l.slug}:${l.qty}`).join(",");
+  useEffect(() => {
+    if (!open || (step !== "summary" && step !== "pay") || !selected || !basketKey) return;
+    let live = true;
+    setQuote({ status: "loading" });
+    import("@/lib/checkout").then(({ quoteCheckout }) => {
+      if (!live) return;
+      const r = quoteCheckout({ items: lines.map((l) => ({ slug: l.slug, qty: l.qty })), address: selected });
+      if (!r.ok) setQuote({ status: "error", message: r.error?.message || "We could not price this order." });
+      else if (!r.data.meets_minimum) setQuote({ status: "error", message: `The minimum order for this address is ${inr(r.data.min_order_value / 100)}.` });
+      else setQuote({ status: "ok", ...r.data });
+    });
+    return () => { live = false; };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open, step, selected?.id, selected?.pincode, basketKey]);
+
   const close = () => {
     onClose();
     if (step === "done") setStep("cart");
   };
 
-  const placeOrder = (e) => {
+  const placing = useRef(false);
+  const [busy, setBusy] = useState(false);
+  const placeOrder = async (e) => {
     e.preventDefault();
+    if (placing.current) return;
     if (method === "card") {
       if (cardStage === "front") {
         const err = frontErrors(card);
@@ -180,21 +216,30 @@ export default function CartDrawer({ open, onClose, items, view, setQty, clear, 
       setCardErrors(msg ? { cvv: msg } : {});
       if (msg) return;
     }
+    if (quote.status !== "ok") return;
+    placing.current = true;
+    setBusy(true);
+    setPlaceError("");
+    orderKey.current ||= `web-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`; // a retry of the same attempt cannot place twice
+    let r;
+    try {
+      const { placeCheckout } = await import("@/lib/checkout");
+      r = placeCheckout({ items: lines.map((l) => ({ slug: l.slug, qty: l.qty })), method, address: selected, key: orderKey.current });
+    } catch (err) {
+      r = { ok: false, error: { message: String(err?.message || err) } };
+    }
+    placing.current = false;
+    setBusy(false);
+    if (!r.ok) {
+      setPlaceError(r.error?.message || "We could not place your order. Please try again.");
+      return;
+    }
+    orderKey.current = null;
     setCard(EMPTY_CARD);
     setCardStage("front");
     setCardErrors({});
     setDoneName(selected?.name || "");
-    const id = `KN${Date.now().toString().slice(-8)}`;
-    setOrderId(id);
-    const items = lines.map(({ p, qty }) => ({ slug: p.slug, name: p.name, img: p.img, price: p.price, qty }));
-    saveOrder({ id, date: new Date().toISOString(), items, total, method, address: selected });
-    // also place it on the platform for live tracking; never blocks or fails the legacy checkout
-    const live = mirrorToPlatform({ id, items, method, address: selected });
-    setLiveNote(
-      live.ok
-        ? { ok: true, no: live.data.display_no, fee: live.data.delivery_fee / 100, total: live.data.total / 100 }
-        : { ok: false, why: live.error?.message || "" },
-    );
+    setPlaced({ no: r.data.display_no, total: r.data.total / 100, fee: r.data.delivery_fee / 100 });
     clear();
     setStep("done");
   };
@@ -250,14 +295,12 @@ export default function CartDrawer({ open, onClose, items, view, setQty, clear, 
             </div>
             <p className="fade-up text-lg font-semibold">Thank you, {doneName || "customer"}!</p>
             <p className="fade-up d2 text-sm text-muted-foreground">
-              Order <b>{orderId}</b> is confirmed
+              Order <b>{placed?.no}</b> is confirmed
               {method === "cod" ? ". Pay in cash on delivery." : ` and will be paid via ${METHODS.find((m) => m.id === method).label}.`}
             </p>
-            {liveNote && (
-              <p className="fade-up d2 max-w-xs text-xs text-muted-foreground" data-testid="live-tracking-note">
-                {liveNote.ok
-                  ? `Live tracking is on as ${liveNote.no}. Delivery for this address adds ${inr(liveNote.fee)}, so the tracked total is ${inr(liveNote.total)}.`
-                  : `Live tracking is not available for this order${liveNote.why ? `: ${liveNote.why}` : ""}`}
+            {placed && (
+              <p className="fade-up d2 max-w-xs text-xs text-muted-foreground">
+                Total {inr(placed.total)}{placed.fee > 0 ? `, including ${inr(placed.fee)} delivery` : ", free delivery"}. You can track it under Your orders.
               </p>
             )}
             <Button onClick={close} className="mt-2 h-11 rounded-xl px-8">
@@ -268,13 +311,13 @@ export default function CartDrawer({ open, onClose, items, view, setQty, clear, 
             </Link>
           </div>
         ) : step === "address" ? (
-          <div data-lenis-prevent className={body}>
+          <div className={body}>
             <MiniSummary count={count} total={total} />
             <AddressBook mode="checkout" onDeliver={() => setStep("summary")} />
           </div>
         ) : step === "summary" && selected ? (
           <>
-            <div data-lenis-prevent className={body}>
+            <div className={body}>
               <AddressBlock a={selected} onChange={() => setStep("address")} />
               <section aria-label="Items in your order">
                 <h3 className="mb-1 text-sm font-semibold">Items ({count})</h3>
@@ -297,18 +340,15 @@ export default function CartDrawer({ open, onClose, items, view, setQty, clear, 
               </section>
             </div>
             <div className="border-t border-slate-200 p-4">
-              <div className="mb-3 flex justify-between font-semibold">
-                <span>Total</span>
-                <span>{inr(total)}</span>
-              </div>
-              <Button onClick={() => setStep("pay")} disabled={lines.length === 0} className="h-11 w-full rounded-xl">
+              <Breakdown quote={quote} />
+              <Button onClick={() => setStep("pay")} disabled={lines.length === 0 || quote.status !== "ok"} className="h-11 w-full rounded-xl">
                 Continue to payment
               </Button>
             </div>
           </>
         ) : step === "pay" && selected ? (
           <form onSubmit={placeOrder} className="flex min-h-0 flex-1 flex-col">
-            <div data-lenis-prevent className="flex-1 space-y-5 overflow-y-auto px-4 py-4">
+            <div className="flex-1 space-y-5 overflow-y-auto px-4 py-4">
               <MiniSummary count={count} total={total} />
               {!onCardBack && <AddressBlock a={selected} onChange={() => setStep("address")} />}
 
@@ -348,18 +388,16 @@ export default function CartDrawer({ open, onClose, items, view, setQty, clear, 
             </div>
 
             <div className="border-t border-slate-200 p-4">
-              <div className="mb-3 flex justify-between font-semibold">
-                <span>Total</span>
-                <span>{inr(total)}</span>
-              </div>
-              <Button type="submit" className="h-11 w-full rounded-xl">
-                {method === "cod" ? "Place Order" : method === "card" && cardStage === "front" ? "Next" : `Pay ${inr(total)}`}
+              <Breakdown quote={quote} />
+              {placeError && <p role="alert" className="mb-3 text-sm font-medium text-red-700">{placeError}</p>}
+              <Button type="submit" disabled={busy || quote.status !== "ok"} className="h-11 w-full rounded-xl">
+                {busy ? "Placing order..." : method === "cod" ? "Place Order" : method === "card" && cardStage === "front" ? "Next" : `Pay ${inr((quote.total || 0) / 100)}`}
               </Button>
             </div>
           </form>
         ) : (
           <>
-            <div data-lenis-prevent className="flex-1 overflow-y-auto px-4 py-2">
+            <div className="flex-1 overflow-y-auto px-4 py-2">
               {lines.length === 0 && gone.length === 0 ? (
                 <div className="flex h-full flex-col items-center justify-center gap-2 text-muted-foreground">
                   <ShoppingCart className="size-10" />

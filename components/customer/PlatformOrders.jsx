@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
-import { ChevronRight, LifeBuoy, Truck } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { ChevronRight, LifeBuoy, Package, Truck } from "@/components/icons";
 import StatusBadge from "@/components/platform/StatusBadge";
 import Money from "@/components/platform/Money";
 import { fmtDate } from "@/components/customer/labels";
@@ -10,19 +11,33 @@ import { PlatformRoot, usePlatformQuery } from "@/lib/platform-ui/PlatformProvid
 function List() {
   const s = useCustomerSession();
   const q = usePlatformQuery((p, a) => p.orders.list(a, { user_id: a.userId }), []);
-  if (s.status !== "ready") return null;
+  if (s.status === "signed_out") {
+    return (
+      <div className="flex flex-col items-center gap-3 rounded-md border border-border bg-white px-6 py-16 text-center">
+        <Package className="size-10 text-muted-foreground" aria-hidden="true" />
+        <p className="font-semibold">Sign in to see your orders</p>
+        <p className="text-sm text-muted-foreground">Orders are saved to your account on this device.</p>
+        <Button onClick={() => window.dispatchEvent(new Event("kn-open-login"))} className="mt-2 h-11 rounded-xl px-8">Sign in</Button>
+      </div>
+    );
+  }
+  if (s.status !== "ready" || q.loading) return null;
   const orders = q.data || [];
   if (orders.length === 0) {
     return (
-      <p className="mb-6 text-sm">
-        <Link href="/help/tickets" className="inline-flex min-h-11 items-center gap-1 font-semibold text-foreground hover:underline"><LifeBuoy className="size-4" aria-hidden="true" /> Support requests</Link>
-      </p>
+      <div className="flex flex-col items-center gap-3 rounded-md border border-border bg-white px-6 py-16 text-center">
+        <Package className="size-10 text-muted-foreground" aria-hidden="true" />
+        <p className="font-semibold">No orders yet</p>
+        <p className="text-sm text-muted-foreground">Orders you place will show up here so you can track them.</p>
+        <Button asChild className="mt-2 h-11 rounded-xl px-8"><Link href="/products">Browse products</Link></Button>
+        <Link href="/help/tickets" className="inline-flex min-h-11 items-center gap-1 text-sm font-semibold text-foreground hover:underline"><LifeBuoy className="size-4" aria-hidden="true" /> Support requests</Link>
+      </div>
     );
   }
   return (
     <section aria-labelledby="live-h" className="mb-8">
       <div className="flex flex-wrap items-center justify-between gap-2">
-        <h2 id="live-h" className="flex items-center gap-2 text-lg font-bold"><Truck className="size-5 text-foreground" aria-hidden="true" /> Live tracking</h2>
+        <h2 id="live-h" className="flex items-center gap-2 text-lg font-bold"><Truck className="size-5 text-foreground" aria-hidden="true" /> Your orders</h2>
         <Link href="/help/tickets" className="inline-flex min-h-11 items-center gap-1 text-sm font-semibold text-foreground hover:underline"><LifeBuoy className="size-4" aria-hidden="true" /> Support requests</Link>
       </div>
       <ul className="mt-2 divide-y divide-border rounded-md border border-border bg-white">
@@ -44,7 +59,7 @@ function List() {
   );
 }
 
-/** Shown above the legacy list on /orders. Renders nothing for signed-out visitors (the legacy list prompts to sign in). */
+/** The orders list on /orders: sign-in prompt, empty state, or the customer's orders. */
 export default function PlatformOrders() {
   return (
     <PlatformRoot>

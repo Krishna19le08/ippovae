@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useId, useState } from "react";
 import { createPortal } from "react-dom";
-import { AlertCircle, FileText, MessageCircle, Send, X } from "lucide-react";
+import { AlertCircle, FileText, MessageCircle, Send, X } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { whatsappHref } from "@/lib/data";
@@ -77,7 +77,7 @@ export default function MessageUs({
             role="dialog"
             aria-label={title}
             aria-modal="true"
-            data-lenis-prevent
+           
             className="relative max-h-full w-full max-w-md overflow-y-auto rounded-3xl bg-white p-6 text-left text-foreground shadow-2xl md:p-8"
           >
             <button onClick={() => setOpen(false)} aria-label="Close" className="absolute top-2 right-2 rounded-md p-2.5 text-muted-foreground hover:text-foreground">

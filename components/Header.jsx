@@ -3,7 +3,7 @@ import { withBase } from "@/lib/asset";
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { MapPin, Search, ShoppingCart, Menu } from "lucide-react";
+import { MapPin, Search, ShoppingCart, Menu } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import CartDrawer from "@/components/CartDrawer";
@@ -13,7 +13,7 @@ import AccountMenu from "@/components/AccountMenu";
 import MobileTabBar from "@/components/MobileTabBar";
 import AccountSheet from "@/components/AccountSheet";
 import { getProfile, useAddresses, USER_EVENT } from "@/lib/addresses";
-import { SHOP, HUB, SITE, categories as baseCats } from "@/lib/data";
+import { HUB, SITE, categories as baseCats } from "@/lib/data";
 import { useCatalog, liveCategories } from "@/lib/admin/catalog";
 
 // set when a search is submitted: the next page's header takes focus back into the search box (navigation remounts it)
@@ -60,8 +60,7 @@ export default function Header() {
     const y = window.scrollY;
     const restore = () => {
       if (Math.abs(window.scrollY - y) > 1) {
-        if (window.lenis) window.lenis.scrollTo(y, { immediate: true, force: true });
-        else window.scrollTo(0, y);
+        window.scrollTo({ top: y, behavior: "instant" });
       }
     };
     requestAnimationFrame(() => requestAnimationFrame(restore));
@@ -195,17 +194,15 @@ export default function Header() {
     };
   }, []);
 
-  // while a drawer or dialog is open the page behind must not scroll (wheel, keys, touch): stop Lenis and clip the root
+  // while a drawer or dialog is open the page behind must not scroll (wheel, keys, touch): clip the root
   const locked = cartOpen || loginOpen || profileOpen || accountOpen;
   useEffect(() => {
     if (!locked) return;
     const root = document.documentElement;
     const prev = root.style.overflow;
-    window.lenis?.stop();
     root.style.overflow = "hidden";
     return () => {
       root.style.overflow = prev;
-      window.lenis?.start();
     };
   }, [locked]);
 
@@ -256,7 +253,7 @@ export default function Header() {
         <div className="mx-auto flex max-w-[1312px] items-center justify-between px-4 py-2">
           <span>Trusted supplier of bearings &amp; belts · Fast delivery</span>
           <span className="hidden gap-3 sm:flex">
-            <a href={SHOP}>Catalogue</a>|<a href={HUB} className="normal-case">ippovae Hub</a>|
+            <Link href="/products">Catalogue</Link>|<a href={HUB} className="normal-case">ippovae Hub</a>|
             <a href={`${SITE}/faq`}>Contact</a>
           </span>
         </div>
@@ -271,7 +268,7 @@ export default function Header() {
         aria-hidden="true"
       />
 
-      <header className="sticky -top-[54px] z-50 border-b border-white/10 md:top-0 surface-ink bg-ink text-white">
+      <header className="print:hidden sticky -top-[54px] z-50 border-b border-white/10 md:top-0 surface-ink bg-ink text-white">
         <div className="mx-auto flex max-w-[1312px] flex-wrap items-center gap-x-4 gap-y-2 px-4 py-2.5 md:flex-nowrap md:gap-8">
           <Link href="/" className="shrink-0">
             <img src={withBase("/logo.png")} alt="ippovae" width={118} height={40} className="h-10 w-auto md:h-12" />
@@ -375,7 +372,7 @@ export default function Header() {
                   <span
                     aria-hidden="true"
                     key={cart}
-                    className="animate-in zoom-in-150 motion-reduce:animate-none absolute -top-2 -right-2.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-primary px-1 text-[11px] leading-none font-semibold text-primary-foreground duration-300"
+                    className="anim-pop-in-slow motion-reduce:animate-none absolute -top-2 -right-2.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-primary px-1 text-[11px] leading-none font-semibold text-primary-foreground duration-300"
                   >
                     {cart}
                   </span>
@@ -433,7 +430,7 @@ export default function Header() {
         cart={cart}
         signedIn={!!user}
         onSearch={() => {
-          window.scrollTo({ top: 0 });
+          window.scrollTo({ top: 0, behavior: "instant" });
           searchRef.current?.focus();
         }}
         onCart={(e) => {

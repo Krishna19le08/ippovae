@@ -1,5 +1,5 @@
 "use client";
-import { Bike, Check, KeyRound, X } from "lucide-react";
+import { Bike, Check, KeyRound, X } from "@/components/icons";
 import { DETAIL_LABEL, MAIN_STEPS, STEP_LABEL, TERMINAL, fmtDateTime } from "@/components/customer/labels";
 
 // Builds the visible steps from the customer history ({ seq, status, at, detail? }).

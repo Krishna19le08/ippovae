@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import { Check, Minus, Plus, Zap } from "lucide-react";
+import { Check, Minus, Plus, Zap } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { inr } from "@/lib/data";
 import { useCartQty } from "@/lib/useCartQty";

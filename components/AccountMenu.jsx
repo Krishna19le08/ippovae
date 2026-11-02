@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { ChevronDown, ClipboardList, LogOut, Package, ShoppingCart, Store, Tag, User, UserRound, Layers } from "lucide-react";
+import { ChevronDown, ClipboardList, LogOut, Package, ShoppingCart, Store, Tag, User, UserRound, Layers } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 
 const BEARINGS = ["Ball Bearings", "Roller Bearings", "Mounted Bearings", "Thrust Bearings"];

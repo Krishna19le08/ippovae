@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
-import { categories as baseCats, SHOP } from "@/lib/data";
+import { ArrowRight } from "@/components/icons";
+import { categories as baseCats } from "@/lib/data";
 import { useCatalog, liveCategories } from "@/lib/admin/catalog";
 
 // Round category icons, like a shopping app's top row.
@@ -28,12 +28,12 @@ export default function CategoryTiles() {
           <div className="text-xs text-muted-foreground">{c.count} {c.count === 1 ? "item" : "items"}</div>
         </Link>
       ))}
-      <a href={SHOP} className="group flex w-24 shrink-0 flex-col items-center text-center md:w-28">
+      <Link href="/products" className="group flex w-24 shrink-0 flex-col items-center text-center md:w-28">
         <div className="flex size-24 items-center justify-center rounded-full border border-dashed border-foreground/40 bg-accent text-foreground transition-all duration-300 group-hover:border-foreground group-hover:bg-accent md:size-28">
           <ArrowRight className="size-7" aria-hidden="true" />
         </div>
-        <div className="mt-2.5 text-sm leading-tight font-semibold text-foreground">View on oknow.co.in</div>
-      </a>
+        <div className="mt-2.5 text-sm leading-tight font-semibold text-foreground">View all products</div>
+      </Link>
     </div>
   );
 }

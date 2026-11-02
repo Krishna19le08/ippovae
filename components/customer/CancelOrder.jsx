@@ -2,7 +2,7 @@
 import { useEffect, useId, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import Link from "next/link";
-import { Ban, Clock, Info } from "lucide-react";
+import { Ban, Clock, Info } from "@/components/icons";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { ErrorNotice } from "@/components/platform/ErrorNotice";

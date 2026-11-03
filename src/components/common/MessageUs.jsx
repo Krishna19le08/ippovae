@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useId, useState } from "react";
+import { Fragment, useEffect, useId, useState } from "react";
 import { createPortal } from "react-dom";
 import { AlertCircle, FileText, MessageCircle, Send, X } from "@/components/ui/icons";
 import { Button } from "@/components/ui/button";
@@ -62,7 +62,7 @@ export default function MessageUs({
   const border = (k) => (errors[k] ? "border-red-500" : "");
 
   return (
-    <>
+    <Fragment>
       <Button variant={variant} onClick={() => setOpen(true)} className={className}>
         <Icon /> {label}
       </Button>
@@ -120,6 +120,6 @@ export default function MessageUs({
         </div>,
         document.body,
       )}
-    </>
+    </Fragment>
   );
 }
